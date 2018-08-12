@@ -4,3 +4,5 @@ app/public
 logs
 run
 out
+system
+coverage

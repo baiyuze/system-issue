@@ -11,7 +11,7 @@ module.exports = appInfo => {
         '.html': 'nunjucks',
       },
     },
-    proxy: "",//中间层前缀
+    // system: "127.0.0.1:7001",//中间层前缀
     security: {
       csrf: {
         enable: false,

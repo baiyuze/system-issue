@@ -104,11 +104,11 @@ let config = {
 
     // 提取样式，生成单独文件
     new ExtractTextPlugin("styles.css"),
-    new BrowserSyncPlugin({
-      host: '127.0.0.1',
-      port: 7002,
-      proxy: 'http://127.0.0.1:7001/'
-    })
+    // new BrowserSyncPlugin({
+    //   host: '127.0.0.1',
+    //   port: 7002,
+    //   proxy: 'http://127.0.0.1:7001/'
+    // })
 
   ]
 

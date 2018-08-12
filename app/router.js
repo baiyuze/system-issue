@@ -11,4 +11,6 @@ module.exports = app => {
   router.get(/^\/download(\/[\w-.]+)+$/,controller.api.download);
   router.get(/^\/api(\/[\w-.]+)+$/,controller.api.proxy);
   router.post(/^\/api(\/[\w-.]+)+$/,controller.api.proxy);
+  // router.get(/^\/system(\/[\w-.]+)+$/,controller.system.file);
+  router.post('/system/api/issue/file',controller.system.file);//
 };1
