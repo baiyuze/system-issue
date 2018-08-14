@@ -19,6 +19,21 @@ class System extends Controller {
       path
     );
   }
+
+/**
+ * @api {/system/api/issue/start}
+ * @param {}
+ * @method {post}
+ * 
+ */
+ async startIssue() {
+  const path = await getPath(this);
+
+  this.ctx.body = await this.service.system.startIssue(
+    this.ctx.req,
+    path
+  );
+ }
 }
 
 const getPath = async that => {

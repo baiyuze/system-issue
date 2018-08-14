@@ -2,11 +2,17 @@ import React from 'react';
 import { connect } from 'dva';
 import { Upload, message, Button, Icon } from 'antd';
 import './index.less';
-
+import $ from 'jquery';
 
 class Home extends React.Component {
   constructor() {
     super();
+  }
+
+  startIssue() {
+    $.post('/system/api/issue/start',(json) => {
+      console.log(json,'json')
+    })
   }
 
   render() {
@@ -35,6 +41,7 @@ class Home extends React.Component {
             <Icon type="upload" /> Click to Upload
           </Button>
         </Upload>
+        <Button onClick={this.startIssue.bind(this)}>发布</Button>
       </div>  
     );
   }

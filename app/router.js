@@ -13,4 +13,5 @@ module.exports = app => {
   router.post(/^\/api(\/[\w-.]+)+$/,controller.api.proxy);
   // router.get(/^\/system(\/[\w-.]+)+$/,controller.system.file);
   router.post('/system/api/issue/file',controller.system.file);//
+  router.post('/system/api/issue/start',controller.system.startIssue);//
 };1

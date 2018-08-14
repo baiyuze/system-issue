@@ -1,10 +1,10 @@
 {
-  "name": "egg-dva",
+  "name": "egg-dva-test-system",
   "version": "0.0.1",
   "description": "",
   "private": true,
   "scripts": {
-    "start": "egg-scripts start --port=8001 --daemon --title=egg-server-egg-dva",
+    "start": "egg-scripts start --port=8001 --daemon --title=egg-server-egg-dva --workers=4",
     "stop": "egg-scripts stop --title=egg-server-egg-dva",
     "ii": "cnpm i && cd assets && cnpm i",
     "dev": "egg-bin dev",

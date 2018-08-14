@@ -5,6 +5,7 @@ const awaitWriteStream = require('await-stream-ready').write;
 const fs = require('fs');
 const path = require('path');
 const formidable = require("formidable");
+const { spawn } = require('child_process');
 const sendToWormhole = require('stream-wormhole');
 
 class FileUpload extends Controller {
@@ -55,10 +56,12 @@ class FileUpload extends Controller {
     try {
       //异步把文件流 写入
       await awaitWriteStream(stream.pipe(writeStream));
+      await this.startFileUnpack(`${fileName}.gz`, versionPath, version, name);
+      await this.startIssue(versionPath);
       return {
         code: 500,
         data: null,
-        message: '上传成功'
+        message: '部署成功'
       }
     } catch (err) {
       return {
@@ -70,10 +73,64 @@ class FileUpload extends Controller {
 
   }
 
-  //开始解压文件
-  async startFileUnpack() {
+  
+  /** 开始解压文件
+   * @param { fileName, versionPath, version, systemName}
+   * @return null;
+   * 
+  */
+  async startFileUnpack(fileName, versionPath, version, systemName) {
+    return new Promise((resolve, reject) => {
+      let unPack = spawn('tar', ['-x','-v', '-f',fileName],{ cwd: versionPath });
+      let pid = unPack.pid;
+  
+      unPack.stdout.on('data', (data) => {
+        console.log(`${data}`);
+      });
+      
+      unPack.stderr.on('data', (data) => {
+        console.log(`${data}`);
+      });
+      
+      unPack.on('close', (code) => {
+        let arr = fs.readFileSync(path.join(__dirname, '../pid/list.json'),{
+          encoding: 'UTF8'
+        });
+        arr = arr ? JSON.parse(arr) : [];
+        arr.push({
+          version: version,
+          name: systemName,
+          pid: pid
+        });
+        
+        fs.writeFileSync(path.join(__dirname, '../pid/list.json'), JSON.stringify(arr));
+        resolve();
+      });
+    })
 
   }
+
+  //开始部署应用
+  startIssue(versionPath) {
+    return new Promise((resolve, reject) => {
+      let unPack = spawn('npm', ['start'],{ cwd: versionPath });
+      let pid = unPack.pid;
+  
+      unPack.stdout.on('data', (data) => {
+        console.log(`${data}`);
+      });
+      
+      unPack.stderr.on('data', (data) => {
+        console.log(`${data}`);
+      });
+      unPack.on('close', (code) => {
+        console.log('当前版本已部署');
+        resolve();
+      })
+    });
+  }
+
+  
 
 }
 
