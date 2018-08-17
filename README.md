@@ -1,11 +1,11 @@
 # egg-dva
 
 
-## 技术栈使用  react + redux + lodash + moment + egg + es6+ 等等;
+## 技术栈使用  react + redux + lodash + moment + egg + es6+ egg + node >8.0 等等;
 
 # 启动
 
-## 安装依赖时使用cnpm run ii安装所有依赖
+## 安装依赖时使用npm i && cd assets && npm i安装所有依赖
 
 ## 启动使用npm run dev
 
